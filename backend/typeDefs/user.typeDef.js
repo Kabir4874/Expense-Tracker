@@ -7,7 +7,6 @@ const userTypeDef = `#graphql
         gender: String! 
     }
     type Query {
-        users:[User!]
         authUser:User 
         user (userId:ID!):User 
     }

@@ -6,6 +6,8 @@ import express from "express";
 import http from "http";
 import mergedResolvers from "./resolvers/index.js";
 import mergedTypeDefs from "./typeDefs/index.js";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 const httpServer = http.createServer(app);
 const server = new ApolloServer({

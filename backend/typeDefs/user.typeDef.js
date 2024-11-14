@@ -1,6 +1,6 @@
 const userTypeDef = `#graphql
     type User{
-        _id:Id!
+        _id:ID!
         username:String! 
         password:String! 
         profilePicture: String 
@@ -9,7 +9,7 @@ const userTypeDef = `#graphql
     type Query {
         users:[User!]
         authUser:User 
-        user (userId:Id!):User 
+        user (userId:ID!):User 
     }
     type Mutation {
         signUp(input:SignUpInput!):User 

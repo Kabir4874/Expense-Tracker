@@ -24,6 +24,46 @@ const transactionResolver = {
       }
     },
   },
-  Mutation: {},
+  Mutation: {
+    createTransaction: async (_, { input }, context) => {
+      try {
+        const newTransaction = new Transaction({
+          ...input,
+          userId: context.getUser()._id,
+        });
+        await newTransaction.save();
+        return newTransaction;
+      } catch (error) {
+        console.error("Error in create transaction", error);
+        throw new Error(error.message || "Internal server error");
+      }
+    },
+
+    updateTransaction: async (_, { input }) => {
+      try {
+        const updatedTransaction = await Transaction.findByIdAndUpdate(
+          input.transactionId,
+          input,
+          { new: true }
+        );
+        return updatedTransaction;
+      } catch (error) {
+        console.error("Error in update transaction", error);
+        throw new Error(error.message || "Internal server error");
+      }
+    },
+
+    deleteTransaction: async (_, { transactionId }) => {
+      try {
+        const deletedTransaction = await Transaction.findByIdAndDelete(
+          transactionId
+        );
+        return deletedTransaction;
+      } catch (error) {
+        console.error("Error in delete transaction", error);
+        throw new Error(error.message || "Internal server error");
+      }
+    },
+  },
 };
 export default transactionResolver;

@@ -7,7 +7,7 @@ import SignUpPage from "./pages/SignUpPage";
 import TransactionPage from "./pages/TransactionPage";
 
 const App = () => {
-  const authUser = true;
+  const authUser = false;
   return (
     <>
       {authUser && <Header />}

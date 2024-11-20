@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkeleton";
 
 const TransactionPage = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const TransactionPage = () => {
     e.preventDefault();
     console.log("formData", formData);
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({

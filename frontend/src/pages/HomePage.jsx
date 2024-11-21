@@ -1,14 +1,11 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-
 import Cards from "../components/Cards";
 import TransactionForm from "../components/TransactionForm";
-
 import { useMutation } from "@apollo/client";
 import toast from "react-hot-toast";
 import { MdLogout } from "react-icons/md";
 import { LOGOUT } from "../graphql/mutations/user.mutation";
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const HomePage = () => {

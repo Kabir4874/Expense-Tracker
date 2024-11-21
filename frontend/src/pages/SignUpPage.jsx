@@ -1,10 +1,10 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import RadioButton from "../components/RadioButton";
-import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../graphql/mutations/user.mutation";
-import toast from "react-hot-toast";
 const SignUpPage = () => {
   const [signUpData, setSignUpData] = useState({
     name: "",
@@ -13,7 +13,9 @@ const SignUpPage = () => {
     gender: "",
   });
 
-  const [signup, { loading, error }] = useMutation(SIGN_UP);
+  const [signup, { loading }] = useMutation(SIGN_UP, {
+    refetchQueries: ["AuthUser"],
+  });
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;

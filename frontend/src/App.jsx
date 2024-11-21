@@ -27,7 +27,12 @@ const App = () => {
           path="/signup"
           element={!data?.authUser ? <SignUpPage /> : <Navigate to={"/"} />}
         />
-        <Route path="/transaction/:id" element={<TransactionPage />} />
+        <Route
+          path="/transaction/:id"
+          element={
+            data?.authUser ? <TransactionPage /> : <Navigate to={"/login"} />
+          }
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Toaster />

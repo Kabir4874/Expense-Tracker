@@ -11,7 +11,7 @@ const TransactionPage = () => {
     variables: { transactionId: id },
   });
 
-  const [updateTransaction,{loading}]= useMutation(UPDATE_TRANSACTION)
+  const [updateTransaction, { loading }] = useMutation(UPDATE_TRANSACTION);
 
   const [formData, setFormData] = useState({
     description: data?.transaction?.description || "",

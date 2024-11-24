@@ -1,14 +1,25 @@
-import { useState } from "react";
-import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkeleton";
+import { useMutation, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
+import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 
 const TransactionPage = () => {
+  const { id } = useParams();
+
+  const { data } = useQuery(GET_TRANSACTION, {
+    variables: { transactionId: id },
+  });
+
+  const [updateTransaction,{loading}]= useMutation(UPDATE_TRANSACTION)
+
   const [formData, setFormData] = useState({
-    description: "",
-    paymentType: "",
-    category: "",
-    amount: "",
-    location: "",
-    date: "",
+    description: data?.transaction?.description || "",
+    paymentType: data?.transaction?.paymentType || "",
+    category: data?.transaction?.category || "",
+    amount: data?.transaction?.amount || "",
+    location: data?.transaction?.location || "",
+    date: data?.transaction?.date || "",
   });
 
   const handleSubmit = async (e) => {
@@ -23,6 +34,19 @@ const TransactionPage = () => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        description: data?.transaction?.description,
+        paymentType: data?.transaction?.paymentType,
+        category: data?.transaction?.category,
+        amount: data?.transaction?.amount,
+        location: data?.transaction?.location,
+        date: new Date(+data?.transaction?.date).toISOString().substr(0, 10),
+      });
+    }
+  }, [data]);
 
   // if (loading) return <TransactionFormSkeleton />;
 

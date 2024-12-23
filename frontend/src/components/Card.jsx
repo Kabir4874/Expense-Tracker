@@ -20,10 +20,11 @@ const Card = ({ transaction }) => {
     transaction;
   const cardClass = categoryColorMap[category];
   const [deleteTransaction] = useMutation(DELETE_TRANSACTION, {
-    refetchQueries: ["Transactions"],
+    refetchQueries: ["Transactions", "GetTransactionStatistics"],
   });
   description = description[0]?.toUpperCase() + description.slice(1);
   category = category[0]?.toUpperCase() + category.slice(1);
+  paymentType = paymentType[0]?.toUpperCase() + paymentType.slice(1);
   const formattedDate = formatDate(date);
 
   const handleDelete = async () => {

@@ -13,7 +13,6 @@ const transactionResolver = {
         throw new Error(error.message || "Internal server error");
       }
     },
-
     transaction: async (_, { transactionId }) => {
       try {
         const transaction = await Transaction.findById(transactionId);
@@ -22,6 +21,22 @@ const transactionResolver = {
         console.error("Error in transaction query", error);
         throw new Error(error.message || "Internal server error");
       }
+    },
+    categoryStatistics: async (_, __, context) => {
+      if (!context.getUser()) throw new Error("Unauthorized");
+      const userId = context.getUser()._id;
+      const transactions = await Transaction.find({ userId });
+      const categoryMap = {};
+      transactions.forEach((transaction) => {
+        if (!categoryMap[transaction.category]) {
+          categoryMap[transaction.category] = 0;
+        }
+        categoryMap[transaction.category] += transaction.amount;
+      });
+      return Object.entries(categoryMap).map(([category, totalAmount]) => ({
+        category,
+        totalAmount,
+      }));
     },
   },
   Mutation: {
